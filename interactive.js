@@ -684,7 +684,7 @@ function displayRoll() {
 
 function displayLocation() {
 
-  return boardSpot[player.location];
+  document.getElementById("location").innerHTML = "You are at " + boardSpot[player.location];
 
 }
 
@@ -700,15 +700,12 @@ function displayLocation() {
 
 function initialSetup() {
 
-  alert("test");
 
   document.getElementById("location").innerHTML = "I exist!"
 
  
 
 }
-
-document.getElementById("location").innerHTML = "I exist!"
 
  
 
@@ -736,3 +733,4 @@ function displayRoll() {
 }
 
 displayRoll();
+displayLocation();
