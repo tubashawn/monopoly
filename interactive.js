@@ -1,6 +1,16 @@
 let tokens = ["battleship", "boot", "cannon", "horse", "iron", "racecar", "dog", "thimble", "tophat", "wheelbarrow", "moneybag"];
 
-//initiate board spaces and names
+let player = {
+    name : "",
+    token : "",
+    money: 1500,
+    ownedProperties: [],
+    justVisiting: true,
+    getOutOfJail: false,  
+    location: 0
+    };
+
+// initiate board spaces and names
 let boardSpot = [{
   spaceName: "GO",
   description: "Collect $200",
@@ -8,37 +18,39 @@ let boardSpot = [{
 }, {
   spaceName: "Mediterranean Avenue",
   purchasePrice: 60,
+  houseCost: 50,
   rent: {
     unimproved: 2,
-    oneHouse: 2,
-    twoHouses: 2,
-    threeHouses: 2,
-    fourHouses: 2,
-    hotel: 2
+    oneHouse: 10,
+    twoHouses: 30,
+    threeHouses: 90,
+    fourHouses: 160,
+    hotel: 250
   },
   colorGroup: "purple",
-  mortgagePrice: 1
+  mortgagePrice: 30
 }, {
   spaceName: "Community Chest",
   description: "Draw a Community Chest card.",
-  action: draw(chestCards)
+//   action: draw(chestCards) // TODO: make sure draw function works
 }, {
   spaceName: "Baltic Avenue",
   purchasePrice: 60,
+  houseCost: 50,
   rent: {
     unimproved: 4,
-    oneHouse: 4,
-    twoHouses: 4,
-    threeHouses: 4,
-    fourHouses: 4,
-    hotel: 4
+    oneHouse: 20,
+    twoHouses: 60,
+    threeHouses: 180,
+    fourHouses: 320,
+    hotel: 450
   },
   colorGroup: "purple",
-  mortgagePrice: 1
+  mortgagePrice: 30
 }, {
   spaceName: "Income Tax",
   description: "Pay $200 tax bill",
-  action: player.money = player.money - 200 // TODO: Create a function to prompt a choice on how this works, but will be 200 for now
+  //action: player.money -= 200 // TODO: Create a function to prompt a choice on how this works, but will be 200 for now
 }, {
   spaceName: "Reading Railroad",
   purchasePrice: 200,
@@ -49,47 +61,50 @@ let boardSpot = [{
     fourRR: 200
   },
   colorGroup: "RR",
-  mortgagePrice: 1
+  mortgagePrice: 100
 }, {
   spaceName: "Oriental Avenue",
   purchasePrice: 100,
+  houseCost: 50,
   rent: {
     unimproved: 6,
-    oneHouse: 2,
-    twoHouses: 2,
-    threeHouses: 2,
-    fourHouses: 2,
-    hotel: 2
+    oneHouse: 30,
+    twoHouses: 90,
+    threeHouses: 270,
+    fourHouses: 400,
+    hotel: 550
   },
   colorGroup: "lightBlue",
-  mortgagePrice: 1
+  mortgagePrice: 50
 }, {
   spaceName: "Chance",
   description: "Draw a Chance card.",
-  action: draw(chanceCards)
+//   action: draw(chanceCards)
 }, {
   spaceName: "Vermont Avenue",
   purchasePrice: 100,
+  houseCost: 50,
   rent: {
     unimproved: 6,
-    oneHouse: 2,
-    twoHouses: 2,
-    threeHouses: 2,
-    fourHouses: 2,
-    hotel: 2
+    oneHouse: 30,
+    twoHouses: 90,
+    threeHouses: 270,
+    fourHouses: 400,
+    hotel: 550
   },
   colorGroup: "lightBlue",
-  mortgagePrice: 1
+  mortgagePrice: 50
 }, {
   spaceName: "Connecticut Avenue",
   purchasePrice: 120,
+  houseCost:50,
   rent: {
     unimproved: 8,
-    oneHouse: 2,
-    twoHouses: 2,
-    threeHouses: 2,
-    fourHouses: 2,
-    hotel: 2
+    oneHouse: 40,
+    twoHouses: 100,
+    threeHouses: 300,
+    fourHouses: 450,
+    hotel: 600
   },
   colorGroup: "lightBlue",
   mortgagePrice: 1
@@ -113,7 +128,7 @@ let boardSpot = [{
 }, {
   spaceName: "Electric Company",
   purchasePrice: 150,
-  rent: 20 // TODO: create function to process dice roll
+  rent: 20, // TODO: create function to process dice roll
   colorGroup: "utility",
   mortgagePrice: 1
 }, {
@@ -169,7 +184,7 @@ let boardSpot = [{
 }, {
   spaceName: "Community Chest",
   description: "Draw a Community Chest card.",
-  action: draw(chestCards)
+//   action: draw(chestCards)
 }, {
   spaceName: "Tennessee Avenue",
   purchasePrice: 180,
@@ -216,7 +231,7 @@ let boardSpot = [{
 }, {
   spaceName: "Chance",
   description: "Draw a Chance card.",
-  action: draw(chanceCards)
+//   action: draw(chanceCards)
 }, {
   spaceName: "Indiana Avenue",
   purchasePrice: 220,
@@ -332,7 +347,7 @@ let boardSpot = [{
 }, {
   spaceName: "Community Chest",
   description: "Draw a Community Chest card.",
-  action: draw(chestCards)
+//   action: draw(chestCards)
 }, {
   spaceName: "Pennsylvania Avenue",
   purchasePrice: 320,
@@ -360,7 +375,7 @@ let boardSpot = [{
 }, {
   spaceName: "Chance",
   description: "Draw a Chance card.",
-  action: draw(chanceCards)
+//   action: draw(chanceCards)
 }, {
   spaceName: "Park Place",
   purchasePrice: 350,
@@ -377,7 +392,7 @@ let boardSpot = [{
 }, {
   spaceName: "Luxury Tax",
   description: "Pay luxury tax",
-  action: player.money = player.money - 75
+  //action: player.money = player.money - 75
 }, {
   spaceName: "Boardwalk",
   purchasePrice: 400,
@@ -391,63 +406,67 @@ let boardSpot = [{
   },
   colorGroup: "green",
   mortgagePrice: 1
-}];
+}]; 
 
- 
+console.log("Is this working?" + " WHy, yes it is!!!");
+console.log(boardSpot);
+console.log(boardSpot[1]);
+console.log(boardSpot[1].rent);
+console.log("The cost for rent with two houses is " + boardSpot[1].rent.twoHouses);
 
 let chanceCards = [{
 
   cardName: "Advance to GO",
 
-  action: player.location = 0;
+//   action: player.location = 0
 
 }, {
 
   cardName: "Advance to Illinois Ave",
 
-  action: player.location = 24;
+//   action: player.location = 24
 
 }, {
 
   cardName: "Advance to St. Charles Place",
 
-  action: player.location = 11;
+//   action: player.location = 11
 
 }, {
 
   cardName: "Advance to nearest utility",
 
-  action: player.location = 28//TODO: create a function to determine which utility to advance to
+//   action: player.location = 28//TODO: create a function to determine which utility to advance to
 
 }, {
 
   cardName: "Advance to the nearest railroad",
 
-  action: player.location = 5 //TODO: create a function to determine which RR to advance to
+//   action: player.location = 5 //TODO: create a function to determine which RR to advance to
 
 }, {
 
   cardName: "Bank pays dividend of $50",
 
-  action: player.money = player.money + 50
+//   action: player.money = player.money + 50
 
 }, {
 
   cardName: "Get out of jail free",
 
-  action: player.getOutOfJail = true
+//   action: player.getOutOfJail = true
 
 }, {
 
   cardName: "Go back three spaces",
 
-  action: player.location -= 3
+//   action: player.location -= 3
 
 }, {
 
   cardName: "Go to jail",
 
-  action: player.location = 10;
+//   action: player.location = 10
 
 }, {
 
@@ -459,19 +478,19 @@ let chanceCards = [{
 
   cardName: "Pay poor tax of $15",
 
-  action: player.money -= 15
+//   action: player.money -= 15
 
 }, {
 
   cardName: "Take a trip on Reading Railroad",
 
-  action: player.location = 5
+//   action: player.location = 5
 
 }, {
 
   cardName: "Take a walk on Boardwalk",
 
-  action: player.location = 39
+//   action: player.location = 39
 
 }, {
 
@@ -483,7 +502,7 @@ let chanceCards = [{
 
   cardName: "Your building and loan matures, collect $150",
 
-  action: player.money += 150
+//   action: player.money += 150
 
 }];
 
@@ -495,85 +514,85 @@ let chestCards = [{
 
   cardName: "Advance to GO",
 
-  action: player.location = 0
+//   action: player.location = 0
 
 }, {
 
   cardName: "Bank error in your favor, collect $200",
 
-  action: player.money += 200
+//   action: player.money += 200
 
 }, {
 
   cardName: "Doctor's fee, pay $50",
 
-  action: player.money -= 50
+//   action: player.money -= 50
 
 }, {
 
   cardName: "From sale of stock you get $45",
 
-  action: player.money += 45
+//   action: player.money += 45
 
 }, {
 
   cardName: "Get out of jail free",
 
-  action: player.getOutOfJail = true
+//   action: player.getOutOfJail = true
 
 }, {
 
   cardName: "Go to jail",
 
-  action: player.location = 10 //TODO: create function that sets inJail to true
+//   action: player.location = 10 //TODO: create function that sets inJail to true
 
 }, {
 
   cardName: "Opening night at the opera, collect $50 from every player",
 
-  action: player.money += 50 //TODO: create function to handle this card
+//   action: player.money += 50 //TODO: create function to handle this card
 
 }, {
 
   cardName: "Christmas fund matures, collect $100",
 
-  action: player.money += 100
+//   action: player.money += 100
 
 }, {
 
   cardName: "Tax refund, collect $20",
 
-  action: player.money += 20
+//   action: player.money += 20
 
 }, {
 
   cardName: "It's your birthday, collect $10 from each player",
 
-  action: player.money =+ 10 //TODO: create function to handle this card, maybe use the same as opera
+//   action: player.money =+ 10 //TODO: create function to handle this card, maybe use the same as opera
 
 }, {
 
   cardName:  "Life insurance matures, collect $100",
 
-  action: player.money += 100
+//   action: player.money += 100
 
 }, {
 
   cardName: "Hospital fees, pay $50",
 
-  action: player.money -= 50
+//   action: player.money -= 50
 
 }, {
 
   cardName: "School fees, pay $50",
 
-  action: player.money -= 50
+//   action: player.money -= 50
 
 }, {
 
   cardName:  "Receive for services $25",
 
-  action: player.money += 25
+//   action: player.money += 25
 
 }, {
 
@@ -585,13 +604,13 @@ let chestCards = [{
 
   cardName: "You have won second prize in a beauty contest, collect $10",
 
-  action: player.money += 10
+//   action: player.money += 10
 
 }, {
 
   cardName: "You inherit $100",
 
-  action: player.money += 100
+//   action: player.money += 100
 
 }];
 
@@ -623,23 +642,7 @@ function shuffle(arr) {
 
  
 
-let player = {
 
-  name : "",
-
-  token : "",
-
-  money: 1500,
-
-  ownedProperties: [],
-
-  justVisiting: true,
-
-  getOutOfJail: false,
-
-  location: 0
-
-}
 
  
 
@@ -687,11 +690,11 @@ function displayLocation() {
 
  
 
-function playerLocation(displayRoll()) {
+// function playerLocation(displayRoll()) {
 
  
 
-}
+// }
 
  
 
