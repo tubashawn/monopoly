@@ -536,7 +536,6 @@ let chestCards = [{
 
 //Fisher-Yates algorithm for shuffling
 let shuffle = (array) => {
-    
     array = array.slice();
 	let currentIndex = array.length;
 	let temporaryValue, randomIndex;
@@ -563,45 +562,55 @@ let drawCard = (deck) => {
 };
 
 
-let displayCard = () => {
-    document.getElementById("cardDraw").addEventListener("click", function() {
-        document.getElementById("card").innerHTML = "You drew " + drawCard(chanceCards).cardName;
-    });
-};
+// let displayCard = () => {
+//     document.getElementById("cardDraw").addEventListener("click", function() {
+//         document.getElementById("card").innerHTML = "You drew " + drawCard(chanceCards).cardName;
+//     });
+// };
 
-let improveQuestion = confirm("Would you like to purchase houses or hotels now?");
+// let improveQuestion = confirm("Would you like to purchase houses or hotels now?");
+
+let firstRoll, secondRoll, total;
 
 function diceRoll() {
     return Math.floor(Math.random() * 6 + 1);
 }
 
-function rollTheDice() {
-    document.getElementById("diceRoll").addEventListener("click", function() {
-        let firstRoll = diceRoll();
-        let secondRoll = diceRoll();
-        let total = firstRoll + secondRoll;
-        document.getElementById("firstDie").innerHTML = "Your first die is " + firstRoll;
-        document.getElementById("secondDie").innerHTML = "Your second die is " + secondRoll;
-        document.getElementById("total").innerHTML = "Your total is " + total;
-        document.getElementById("demo").style.visibility = "hidden";
-        return total;
-    });
-}
-
+let rollTheDice = () => document.getElementById("diceRoll").addEventListener("click", function() {
+    firstRoll = diceRoll();
+    secondRoll = diceRoll();
+    total = firstRoll + secondRoll;
+    document.getElementById("firstDie").innerHTML = "Your first die is " + firstRoll;
+    document.getElementById("secondDie").innerHTML = "Your second die is " + secondRoll;
+    document.getElementById("total").innerHTML = "Your total is " + total;
+    document.getElementById("demo").style.visibility = "hidden";
+    player.location += total;
+    displayLocation(player.location);
+});
 function locationFinder(address) {
     return boardSpot[address].spaceName;
 } 
 
 function displayLocation() {
-  document.getElementById("location").innerHTML = "You are at " + locationFinder(7);
+    if (player.location <= 39) {
+        console.log(player.location + " is less than 39") ;
+        document.getElementById("location").innerHTML = "You are at " + locationFinder(player.location);
+    } else {
+        player.location -= 40;
+        console.log(player.location + " is greater than 39");
+        document.getElementById("location").innerHTML = "You are at " + locationFinder(player.location);
+    }
+
 }
-// function playerLocation(displayRoll()) {
-// }
+
 
 function playerTurn() {
-    if (improveQuestion != true) {
-        alert("Let's roll them dice!");
-        rollTheDice();
+    if(player.ownedProperties === null) {
+        if (improveQuestion != true) {
+            displayLocation();
+        }
+    } else {
+        rollTheDice(); 
     }
 }
 
