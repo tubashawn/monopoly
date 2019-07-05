@@ -1,8 +1,8 @@
 let tokens = ["battleship", "boot", "cannon", "horse", "iron", "racecar", "dog", "thimble", "tophat", "wheelbarrow", "moneybag"];
 
 let player = {
-    name : "",
-    token : "",
+    name : "Player 1",
+    token : "battleship",
     money: 1500,
     ownedProperties: [],
     justVisiting: true,
@@ -569,11 +569,13 @@ let displayCard = () => {
     });
 };
 
+let improveQuestion = confirm("Would you like to purchase houses or hotels now?");
+
 function diceRoll() {
     return Math.floor(Math.random() * 6 + 1);
 }
 
-function displayRoll() {
+function rollTheDice() {
     document.getElementById("diceRoll").addEventListener("click", function() {
         let firstRoll = diceRoll();
         let secondRoll = diceRoll();
@@ -581,6 +583,8 @@ function displayRoll() {
         document.getElementById("firstDie").innerHTML = "Your first die is " + firstRoll;
         document.getElementById("secondDie").innerHTML = "Your second die is " + secondRoll;
         document.getElementById("total").innerHTML = "Your total is " + total;
+        document.getElementById("demo").style.visibility = "hidden";
+        return total;
     });
 }
 
@@ -595,7 +599,10 @@ function displayLocation() {
 // }
 
 function playerTurn() {
-    
+    if (improveQuestion != true) {
+        alert("Let's roll them dice!");
+        rollTheDice();
+    }
 }
 
 let gameSetup = () => {
@@ -603,9 +610,9 @@ let gameSetup = () => {
     shuffle(chestCards);
 };
 
-console.log(chanceCards);
+
 gameSetup();
-console.log(chanceCards);
-displayRoll();
-displayLocation();
-displayCard();
+playerTurn();
+
+// displayLocation();
+// displayCard();
