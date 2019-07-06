@@ -14,7 +14,9 @@ let player = {
 let boardSpot = [{
   spaceName: "GO",
   description: "Collect $200",
-  action: player.money += 200
+  action: function() {
+      return player.money += 200;
+  }
 }, {
   spaceName: "Mediterranean Avenue",
   purchasePrice: 60,
@@ -425,12 +427,6 @@ let boardSpot = [{
   mortgagePrice: 200
 }]; 
 
-// console.log("Is this working?" + " Why, yes it is!!!");
-// console.log(boardSpot);
-// console.log(boardSpot[1]);
-// console.log(boardSpot[1].rent);
-// console.log("The cost for rent with two houses is " + boardSpot[1].rent.twoHouses);
-
 let chanceCards = [{
   cardName: "Advance to GO",
 //   action: player.location = 0
@@ -568,40 +564,40 @@ let drawCard = (deck) => {
 //     });
 // };
 
-// let improveQuestion = confirm("Would you like to purchase houses or hotels now?");
-
-let firstRoll, secondRoll, total;
-
 function diceRoll() {
     return Math.floor(Math.random() * 6 + 1);
 }
 
 let rollTheDice = () => document.getElementById("diceRoll").addEventListener("click", function() {
-    firstRoll = diceRoll();
-    secondRoll = diceRoll();
-    total = firstRoll + secondRoll;
+    let firstRoll = diceRoll();
+    let secondRoll = diceRoll();
+    let total = firstRoll + secondRoll;
     document.getElementById("firstDie").innerHTML = "Your first die is " + firstRoll;
     document.getElementById("secondDie").innerHTML = "Your second die is " + secondRoll;
     document.getElementById("total").innerHTML = "Your total is " + total;
-    document.getElementById("demo").style.visibility = "hidden";
-    player.location += total;
+    player.location += total; // player.location = player.location + total
     displayLocation(player.location);
 });
-function locationFinder(address) {
-    return boardSpot[address].spaceName;
-} 
 
-function displayLocation() {
+
+
+function displayLocation() { 
     if (player.location <= 39) {
-        console.log(player.location + " is less than 39") ;
         document.getElementById("location").innerHTML = "You are at " + locationFinder(player.location);
     } else {
         player.location -= 40;
-        console.log(player.location + " is greater than 39");
+        boardSpot[0].action();
         document.getElementById("location").innerHTML = "You are at " + locationFinder(player.location);
     }
-
 }
+
+function displayMoney() {
+    document.getElementById("money").innerHTML = "You have " + player.money + " dollars."
+}
+
+function locationFinder(address) {
+    return boardSpot[address].spaceName;
+} 
 
 
 function playerTurn() {
@@ -617,11 +613,11 @@ function playerTurn() {
 let gameSetup = () => {
     shuffle(chanceCards);
     shuffle(chestCards);
-};
+}
 
 
 gameSetup();
 playerTurn();
-
+displayMoney();
 // displayLocation();
 // displayCard();
