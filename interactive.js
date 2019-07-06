@@ -13,9 +13,11 @@ let player = {
 // initiate board spaces and names
 let boardSpot = [{
   spaceName: "GO",
-  description: "Collect $200",
+  description: "You have passed go. Collect $200",
   action: function() {
-      return player.money += 200;
+      player.money += 200;
+      displayMoney();
+      displayDescription(this);
   }
 }, {
   spaceName: "Mediterranean Avenue",
@@ -34,7 +36,8 @@ let boardSpot = [{
 }, {
   spaceName: "Community Chest",
   description: "Draw a Community Chest card.",
-//   action: draw(chestCards) // TODO: make sure draw function works
+  action: displayDescription(this)
+    // draw(chestCards) // TODO: make sure draw function works
 }, {
   spaceName: "Baltic Avenue",
   purchasePrice: 60,
@@ -52,7 +55,8 @@ let boardSpot = [{
 }, {
   spaceName: "Income Tax",
   description: "Pay $200 tax bill",
-  //action: player.money -= 200 // TODO: Create a function to prompt a choice on how this works, but will be 200 for now
+  action: displayDescription(this)
+    // player.money -= 200 // TODO: Create a function to prompt a choice on how this works, but will be 200 for now
 }, {
   spaceName: "Reading Railroad",
   purchasePrice: 200,
@@ -190,7 +194,8 @@ let boardSpot = [{
 }, {
   spaceName: "Community Chest",
   description: "Draw a Community Chest card.",
-//   action: draw(chestCards)
+  action: displayDescription(this)
+    // draw(chestCards)
 }, {
   spaceName: "Tennessee Avenue",
   purchasePrice: 180,
@@ -222,6 +227,7 @@ let boardSpot = [{
 },{
   spaceName: "Free Parking",
   description: "You get to stay for free!",
+  action: displayDescription(this)
   //TODO: create a function to give all the money in the free parking pool
 }, {
   spaceName: "Kentucky Avenue",
@@ -240,7 +246,8 @@ let boardSpot = [{
 }, {
   spaceName: "Chance",
   description: "Draw a Chance card.",
-//   action: draw(chanceCards)
+  action: displayDescription(this)
+//   draw(chanceCards)
 }, {
   spaceName: "Indiana Avenue",
   purchasePrice: 220,
@@ -363,7 +370,8 @@ let boardSpot = [{
 }, {
   spaceName: "Community Chest",
   description: "Draw a Community Chest card.",
-//   action: draw(chestCards)
+  action: displayDescription(this)
+//   draw(chestCards)
 }, {
   spaceName: "Pennsylvania Avenue",
   purchasePrice: 320,
@@ -569,6 +577,7 @@ function diceRoll() {
 }
 
 let rollTheDice = () => document.getElementById("diceRoll").addEventListener("click", function() {
+    document.getElementById("message").innerHTML = "";
     let firstRoll = diceRoll();
     let secondRoll = diceRoll();
     let total = firstRoll + secondRoll;
@@ -576,7 +585,7 @@ let rollTheDice = () => document.getElementById("diceRoll").addEventListener("cl
     document.getElementById("secondDie").innerHTML = "Your second die is " + secondRoll;
     document.getElementById("total").innerHTML = "Your total is " + total;
     player.location += total; // player.location = player.location + total
-    displayLocation(player.location);
+    displayLocation();
 });
 
 
@@ -592,8 +601,14 @@ function displayLocation() {
 }
 
 function displayMoney() {
-    document.getElementById("money").innerHTML = "You have " + player.money + " dollars."
+    document.getElementById("money").innerHTML = "You have " + player.money + " dollars.";
 }
+
+function displayDescription(spot) {  
+    document.getElementById("message").innerHTML = spot.description;
+}
+
+
 
 function locationFinder(address) {
     return boardSpot[address].spaceName;
