@@ -36,7 +36,9 @@ let boardSpot = [{
 }, {
   spaceName: "Community Chest",
   description: "Draw a Community Chest card.",
-  action: displayDescription(this)
+  action: function() {
+      displayDescription(this);
+  }
     // draw(chestCards) // TODO: make sure draw function works
 }, {
   spaceName: "Baltic Avenue",
@@ -55,7 +57,9 @@ let boardSpot = [{
 }, {
   spaceName: "Income Tax",
   description: "Pay $200 tax bill",
-  action: displayDescription(this)
+  action: function() {
+      displayDescription(this);
+  }
     // player.money -= 200 // TODO: Create a function to prompt a choice on how this works, but will be 200 for now
 }, {
   spaceName: "Reading Railroad",
@@ -85,7 +89,10 @@ let boardSpot = [{
 }, {
   spaceName: "Chance",
   description: "Draw a Chance card.",
-//   action: draw(chanceCards)
+  action: function() {
+      displayDescription(this);
+    // draw(chanceCards)
+  }
 }, {
   spaceName: "Vermont Avenue",
   purchasePrice: 100,
@@ -117,6 +124,9 @@ let boardSpot = [{
 }, {
   spaceName: "Jail",
   description: "Just visiting",
+  action: function() {
+      displayDescription(this);
+  }
   // TODO: create an inJail function to countdown,
 }, {
   spaceName: "St. Charles Place",
@@ -194,8 +204,10 @@ let boardSpot = [{
 }, {
   spaceName: "Community Chest",
   description: "Draw a Community Chest card.",
-  action: displayDescription(this)
+  action: function() {
+      displayDescription(this);
     // draw(chestCards)
+  }
 }, {
   spaceName: "Tennessee Avenue",
   purchasePrice: 180,
@@ -227,7 +239,9 @@ let boardSpot = [{
 },{
   spaceName: "Free Parking",
   description: "You get to stay for free!",
-  action: displayDescription(this)
+  action: function() {
+      displayDescription(this);
+  }
   //TODO: create a function to give all the money in the free parking pool
 }, {
   spaceName: "Kentucky Avenue",
@@ -246,8 +260,10 @@ let boardSpot = [{
 }, {
   spaceName: "Chance",
   description: "Draw a Chance card.",
-  action: displayDescription(this)
+  action: function() {
+      displayDescription(this);
 //   draw(chanceCards)
+  }
 }, {
   spaceName: "Indiana Avenue",
   purchasePrice: 220,
@@ -338,6 +354,10 @@ let boardSpot = [{
 }, {
   spaceName: "Go to Jail",
   description: "Go directly to jail",
+  action: function() {
+      displayDescription(this);
+      player.location = 9;
+  }
   //TODO: create a goToJail function to handle this space and other jail possibilities
 }, {
   spaceName: "Pacific Avenue",
@@ -370,8 +390,10 @@ let boardSpot = [{
 }, {
   spaceName: "Community Chest",
   description: "Draw a Community Chest card.",
-  action: displayDescription(this)
+  action: function() {
+      displayDescription(this);
 //   draw(chestCards)
+  }
 }, {
   spaceName: "Pennsylvania Avenue",
   purchasePrice: 320,
@@ -400,7 +422,10 @@ let boardSpot = [{
 }, {
   spaceName: "Chance",
   description: "Draw a Chance card.",
-//   action: draw(chanceCards)
+  action: function() {
+      displayDescription(this);
+    // draw(chanceCards)
+  }
 }, {
   spaceName: "Park Place",
   purchasePrice: 350,
@@ -418,7 +443,10 @@ let boardSpot = [{
 }, {
   spaceName: "Luxury Tax",
   description: "Pay luxury tax",
-  //action: player.money = player.money - 75
+  action: function() {
+    displayDescription(this);  
+    player.money -=  75;
+  }
 }, {
   spaceName: "Boardwalk",
   purchasePrice: 400,
@@ -586,6 +614,9 @@ let rollTheDice = () => document.getElementById("diceRoll").addEventListener("cl
     document.getElementById("total").innerHTML = "Your total is " + total;
     player.location += total; // player.location = player.location + total
     displayLocation();
+    if (boardSpot[player.location].action) {
+        boardSpot[player.location].action();
+    }
 });
 
 
