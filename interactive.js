@@ -1,3 +1,5 @@
+let freeParking = 0;
+
 let tokens = ["battleship", "boot", "cannon", "horse", "iron", "racecar", "dog", "thimble", "tophat", "wheelbarrow", "moneybag"];
 
 let player = {
@@ -17,7 +19,7 @@ let boardSpot = [{
   action: function() {
       player.money += 200;
       displayMoney();
-      displayDescription(this);
+      document.getElementById("go-message").innerHTML = this.description;
   }
 }, {
   spaceName: "Mediterranean Avenue",
@@ -57,10 +59,12 @@ let boardSpot = [{
 }, {
   spaceName: "Income Tax",
   description: "Pay $200 tax bill",
+  amount: 200,
   action: function() {
       displayDescription(this);
-  }
+      parkingMoney(this);
     // player.money -= 200 // TODO: Create a function to prompt a choice on how this works, but will be 200 for now
+  }
 }, {
   spaceName: "Reading Railroad",
   purchasePrice: 200,
@@ -240,6 +244,7 @@ let boardSpot = [{
   spaceName: "Free Parking",
   description: "You get to stay for free!",
   action: function() {
+      player.money += freeParking;
       displayDescription(this);
   }
   //TODO: create a function to give all the money in the free parking pool
@@ -443,9 +448,9 @@ let boardSpot = [{
 }, {
   spaceName: "Luxury Tax",
   description: "Pay luxury tax",
+  amount: 75,
   action: function() {
     displayDescription(this);  
-    player.money -=  75;
   }
 }, {
   spaceName: "Boardwalk",
@@ -606,6 +611,9 @@ function diceRoll() {
 
 let rollTheDice = () => document.getElementById("diceRoll").addEventListener("click", function() {
     document.getElementById("message").innerHTML = "";
+    if (document.getElementById("go-message").innerHTML != "") {
+        document.getElementById("go-message").innerHTML = "";
+    }
     let firstRoll = diceRoll();
     let secondRoll = diceRoll();
     let total = firstRoll + secondRoll;
@@ -639,6 +647,11 @@ function displayDescription(spot) {
     document.getElementById("message").innerHTML = spot.description;
 }
 
+function parkingMoney(fee) {
+    player.money -= fee.amount;
+    freeParking += fee.amount;
+    console.log("you paid " + fee.amount)
+}
 
 
 function locationFinder(address) {
@@ -655,6 +668,7 @@ function playerTurn() {
         rollTheDice(); 
     }
 }
+
 
 let gameSetup = () => {
     shuffle(chanceCards);
