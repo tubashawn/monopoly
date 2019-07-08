@@ -4,7 +4,7 @@ let tokens = ["battleship", "boot", "cannon", "horse", "iron", "racecar", "dog",
 
 let player = {
     name : "Player 1",
-    token : "battleship",
+    token : tokens[0],
     money: 1500,
     ownedProperties: [],
     justVisiting: true,
@@ -246,6 +246,9 @@ let boardSpot = [{
   action: function() {
       player.money += freeParking;
       displayDescription(this);
+      console.log("you earned " + freeParking + " dollars.");
+      freeParking = 0;
+      console.log("There are " + freeParking + " dollars left.");
   }
   //TODO: create a function to give all the money in the free parking pool
 }, {
@@ -451,6 +454,7 @@ let boardSpot = [{
   amount: 75,
   action: function() {
     displayDescription(this);  
+    parkingMoney(this);
   }
 }, {
   spaceName: "Boardwalk",
