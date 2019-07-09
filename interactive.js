@@ -603,11 +603,19 @@ let drawCard = (deck) => {
 };
 
 
-// let displayCard = () => {
-//     document.getElementById("cardDraw").addEventListener("click", function() {
-//         document.getElementById("card").innerHTML = "You drew " + drawCard(chanceCards).cardName;
-//     });
-// };
+let displayCard = () => {
+    let cardStack;
+    if (boardSpot[player.location].spaceName == "Community Chest") {
+        cardStack = chestCards;
+        
+    } else if (boardSpot[player.location].spaceName == "Chance") {
+        cardStack = chanceCards;
+    } 
+    if (cardStack != undefined) {
+        document.getElementById("card").innerHTML = "You drew " + drawCard(cardStack).cardName;
+        console.log(drawCard(cardStack).cardName);
+    }   
+};
 
 function diceRoll() {
     return Math.floor(Math.random() * 6 + 1);
@@ -626,6 +634,7 @@ let rollTheDice = () => document.getElementById("diceRoll").addEventListener("cl
     document.getElementById("total").innerHTML = "Your total is " + total;
     player.location += total; // player.location = player.location + total
     displayLocation();
+    displayCard();
     if (boardSpot[player.location].action) {
         boardSpot[player.location].action();
     }
@@ -684,4 +693,4 @@ gameSetup();
 playerTurn();
 displayMoney();
 // displayLocation();
-// displayCard();
+
