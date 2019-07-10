@@ -1,3 +1,5 @@
+// goal for complete functionality - end of july
+
 let freeParking = 0;
 
 let tokens = ["battleship", "boot", "cannon", "horse", "iron", "racecar", "dog", "thimble", "tophat", "wheelbarrow", "moneybag"];
