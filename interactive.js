@@ -10,6 +10,7 @@ let player = {
     money: 1500,
     ownedProperties: [],
     justVisiting: true,
+    jailCount: 0,
     getOutOfJail: false,  
     location: 0
     };
@@ -43,7 +44,6 @@ let boardSpot = [{
   action: function() {
       displayDescription(this);
   }
-    // draw(chestCards) // TODO: make sure draw function works
 }, {
   spaceName: "Baltic Avenue",
   purchasePrice: 60,
@@ -131,7 +131,11 @@ let boardSpot = [{
   spaceName: "Jail",
   description: "Just visiting",
   action: function() {
-      displayDescription(this);
+      if (player.justVisiting === true) {
+        displayDescription(this);
+      } else if (player.justVisiting === false) {
+
+      }
   }
   // TODO: create an inJail function to countdown,
 }, {
@@ -623,22 +627,30 @@ function diceRoll() {
     return Math.floor(Math.random() * 6 + 1);
 }
 
-let rollTheDice = () => document.getElementById("diceRoll").addEventListener("click", function() {
-    document.getElementById("message").innerHTML = "";
-    if (document.getElementById("go-message").innerHTML != "") {
-        document.getElementById("go-message").innerHTML = "";
-    }
+let rollTheDice = () => {
     let firstRoll = diceRoll();
     let secondRoll = diceRoll();
     let total = firstRoll + secondRoll;
     document.getElementById("firstDie").innerHTML = "Your first die is " + firstRoll;
     document.getElementById("secondDie").innerHTML = "Your second die is " + secondRoll;
     document.getElementById("total").innerHTML = "Your total is " + total;
-    player.location += total; // player.location = player.location + total
+    return total;
+    // this may not work for inJail function
+}
+
+let runTurn = () => document.getElementById("diceRoll").addEventListener("click", function() {
+    document.getElementById("message").innerHTML = "";
+    document.getElementById("card").innerHTML = "";
+    if (document.getElementById("go-message").innerHTML != "") {
+        document.getElementById("go-message").innerHTML = "";
+    }
+    player.location += rollTheDice();
     displayLocation();
     displayCard();
     if (boardSpot[player.location].action) {
         boardSpot[player.location].action();
+    } else if (boardSpot[player.location] == 9 && player.justVisiting == false) {
+      boardSpot[player.location] = 9;
     }
 });
 
@@ -665,7 +677,6 @@ function displayDescription(spot) {
 function parkingMoney(fee) {
     player.money -= fee.amount;
     freeParking += fee.amount;
-    console.log("you paid " + fee.amount)
 }
 
 
@@ -680,10 +691,27 @@ function playerTurn() {
             displayLocation();
         }
     } else {
-        rollTheDice(); 
+        runTurn(); 
     }
 }
 
+let inJail = () => {
+  let dieOne, dieTwo;
+  if (player.jailCount < 3) {
+    player.justVisiting = false;
+    dieOne = diceRoll();
+    dieTwo = diceRoll();
+    if (dieOne === dieTwo) {
+      player.justVisiting = true;
+      document.getElementById("message").innerHTML = "You served your time, you are now out of jail. Roll the dice.";
+      runTurn();
+    } else {
+      document.getElementById("message").innerHTML = "You are still locked up.";
+    }
+  } 
+  // figure out a better way?
+
+}
 
 let gameSetup = () => {
     shuffle(chanceCards);
@@ -694,5 +722,4 @@ let gameSetup = () => {
 gameSetup();
 playerTurn();
 displayMoney();
-// displayLocation();
 
