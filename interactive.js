@@ -1,4 +1,5 @@
 // goal for complete functionality - end of july
+// goal - finish all basic logic this weekend for single player
 
 let freeParking = 0;
 
