@@ -681,8 +681,11 @@ let displayCard = () => {
         cardStack = chanceCards;
     } 
     if (cardStack != undefined) {
-        document.getElementById("card").innerHTML = "You drew " + drawCard(cardStack).cardName;
-        console.log(drawCard(cardStack).cardName);
+      let drawnCard = drawCard(cardStack);
+        document.getElementById("card").innerHTML = "You drew " + drawnCard.cardName;
+        console.log(drawnCard);
+        drawnCard.action();
+        displayMoney();
     }   
 };
 
