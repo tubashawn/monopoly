@@ -743,6 +743,7 @@ function displayDescription(spot) {
 function parkingMoney(fee) {
     player.money -= fee.amount;
     freeParking += fee.amount;
+    displayMoney();
 }
 
 
