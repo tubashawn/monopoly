@@ -253,11 +253,8 @@ let boardSpot = [{
   action: function() {
       player.money += freeParking;
       displayDescription(this);
-      console.log("you earned " + freeParking + " dollars.");
       freeParking = 0;
-      console.log("There are " + freeParking + " dollars left.");
   }
-  //TODO: create a function to give all the money in the free parking pool
 }, {
   spaceName: "Kentucky Avenue",
   purchasePrice: 220,
@@ -373,7 +370,6 @@ let boardSpot = [{
       displayDescription(this);
       player.location = 9;
   }
-  //TODO: create a goToJail function to handle this space and other jail possibilities
 }, {
   spaceName: "Pacific Avenue",
   purchasePrice: 300,
@@ -481,102 +477,168 @@ let boardSpot = [{
 
 let chanceCards = [{
   cardName: "Advance to GO",
-//   action: player.location = 0
+  action: function() {
+    player.location = 0;
+  }
 }, {
   cardName: "Advance to Illinois Ave",
-//   action: player.location = 24
+  action: function() {
+    player.location = 24;
+  }
 }, {
   cardName: "Advance to St. Charles Place",
-//   action: player.location = 11
+  action: function() {
+    player.location = 11;
+  }
 }, {
   cardName: "Advance to nearest utility",
-//   action: player.location = 28//TODO: create a function to determine which utility to advance to
+  action: function() {
+    player.location = 28; //TODO: create a function to determine which utility to advance to
+  }
 }, {
   cardName: "Advance to the nearest railroad",
-//   action: player.location = 5 //TODO: create a function to determine which RR to advance to
+  action: function() {
+    player.location = 5;
+   } //TODO: create a function to determine which RR to advance to
 }, {
   cardName: "Bank pays dividend of $50",
-//   action: player.money = player.money + 50
+  action: function() {
+    player.money += 50;
+  } 
 }, {
   cardName: "Get out of jail free",
-//   action: player.getOutOfJail = true
+  action: function() {
+    player.getOutOfJail = true;
+  }
 }, {
   cardName: "Go back three spaces",
-//   action: player.location -= 3
+  action: function() {
+    player.location -= 3;
+  }
 }, {
   cardName: "Go to jail",
-//   action: player.location = 10
+  action: function() {
+    player.location = 10;
+  }
 }, {
   cardName: "Make general repairs",
-  //TODO: create a function to handle repairs card
+  action: function() {
+    console.log("You lucked out, no repairs necessary");
+  }
+  // TODO: create a function to handle repairs card
 }, {
   cardName: "Pay poor tax of $15",
-//   action: player.money -= 15
+  action: function() {
+    player.money -= 15;
+  }
 }, {
   cardName: "Take a trip on Reading Railroad",
-//   action: player.location = 5
+  action: function() {
+    player.location = 5;
+  }
 }, {
   cardName: "Take a walk on Boardwalk",
-//   action: player.location = 39
+  action: function() {
+    player.location = 39;
+  }
 }, {
   cardName: "You have been elected chairman of the board. Pay each player $50",
+  action: function() {
+    console.log("Lucky you, there are no other players yet!");
+  }
   //TODO: create a function to handle this card
 }, {
   cardName: "Your building and loan matures, collect $150",
-//   action: player.money += 150
+  action: function() {
+    player.money += 150;
+  }
 }];
 
 let chestCards = [{
   cardName: "Advance to GO",
-//   action: player.location = 0
+  action: function() {
+    player.location = 0;
+  }
 }, {
   cardName: "Bank error in your favor, collect $200",
-//   action: player.money += 200
+  action: function() {
+    player.money += 200;
+  }
 }, {
   cardName: "Doctor's fee, pay $50",
-//   action: player.money -= 50
+  action: function() {
+    player.money -= 50;
+  }
 }, {
   cardName: "From sale of stock you get $45",
-//   action: player.money += 45
+  action: function() {
+    player.money += 45;
+  }
 }, {
   cardName: "Get out of jail free",
-//   action: player.getOutOfJail = true
+  action: function() {
+    player.getOutOfJail = true;
+  }
 }, {
   cardName: "Go to jail",
-//   action: player.location = 10 //TODO: create function that sets inJail to true
+  action: function() {
+    player.location = 10; //TODO: create function that sets inJail to true
+  }
 }, {
   cardName: "Opening night at the opera, collect $50 from every player",
-//   action: player.money += 50 //TODO: create function to handle this card
+  action: function() {
+    player.money += 50; //TODO: create function to handle this card
+  }
 }, {
   cardName: "Christmas fund matures, collect $100",
-//   action: player.money += 100
+  action: function() {
+    player.money += 100;
+  }
 }, {
   cardName: "Tax refund, collect $20",
-//   action: player.money += 20
+  action: function() {
+    player.money += 20;
+  }
 }, {
   cardName: "It's your birthday, collect $10 from each player",
-//   action: player.money =+ 10 //TODO: create function to handle this card, maybe use the same as opera
+  action: function() {
+    player.money =+ 10; //TODO: create function to handle this card, maybe use the same as opera
+  }
 }, {
   cardName:  "Life insurance matures, collect $100",
-//   action: player.money += 100
+  action: function() {
+    player.money += 100;
+  }
 }, {
   cardName: "Hospital fees, pay $50",
-//   action: player.money -= 50
+  action: function() {
+    player.money -= 50;
+  }
 }, {
   cardName: "School fees, pay $50",
-//   action: player.money -= 50
+  action: function() {
+    player.money -= 50;
+  }
 }, {
   cardName:  "Receive for services $25",
-//   action: player.money += 25
+  action: function() {
+    player.money += 25;
+  }
 }, {
   cardName: "Street repairs",
-  //TODO: create a function to handle this card
+  action: function() {
+    console.log("No repairs necessary");
+  }  //TODO: create a function to handle this card
 }, {
   cardName: "You have won second prize in a beauty contest, collect $10",
-//   action: player.money += 10
+  action: function() {
+    player.money += 10;
+  }
 }, {
   cardName: "You inherit $100",
-//   action: player.money += 100
+  action: function() {
+    player.money += 100;
+  }
 }];
 //create a draw function to process chest/chance card drawing
 
