@@ -712,10 +712,13 @@ let rollTheDice = () => {
 }
 
 let runTurn = () => document.getElementById("diceRoll").addEventListener("click", function() {
-    document.getElementById("message").innerHTML = "";
-    document.getElementById("card").innerHTML = "";
+  edit("message","");
+    // document.getElementById("message").innerHTML = "";
+  edit("card", "");
+    // document.getElementById("card").innerHTML = "";
     if (document.getElementById("go-message").innerHTML != "") {
-        document.getElementById("go-message").innerHTML = "";
+      edit("go-message", "");
+        // document.getElementById("go-message").innerHTML = "";
     }
     player.location += rollTheDice();
     displayLocation();
@@ -730,13 +733,16 @@ let runTurn = () => document.getElementById("diceRoll").addEventListener("click"
 
 
 function displayLocation() { 
+  let locDisplay = edit("location", "You are at " + locationFinder(player.location));
     if (player.location <= 39) {
-      // edit(location).innerHTML = "You are at " + locationFinder(player.location);
-        document.getElementById("location").innerHTML = "You are at " + locationFinder(player.location);
+      locDisplay;
+      // edit("location", "You are at " + locationFinder(player.location));
+        // document.getElementById("location").innerHTML = "You are at " + locationFinder(player.location);
     } else {
         player.location -= 40;
         boardSpot[0].action();
-        document.getElementById("location").innerHTML = "You are at " + locationFinder(player.location);
+        locDisplay;
+        // document.getElementById("location").innerHTML = "You are at " + locationFinder(player.location);
     }
 }
 
