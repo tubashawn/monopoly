@@ -1,8 +1,8 @@
 // goal for complete functionality - end of july
 // goal - finish all basic logic this weekend for single player
 
-let edit = (id, info) => {
-  document.getElementById("'" + id + "'").innerHTML = info;
+let edit = (id, data) => {
+  document.getElementById(id).innerHTML = data;
 }
 
 let freeParking = 0;
@@ -701,9 +701,12 @@ let rollTheDice = () => {
     let firstRoll = diceRoll();
     let secondRoll = diceRoll();
     let total = firstRoll + secondRoll;
-    document.getElementById("firstDie").innerHTML = "Your first die is " + firstRoll;
-    document.getElementById("secondDie").innerHTML = "Your second die is " + secondRoll;
-    document.getElementById("total").innerHTML = "Your total is " + total;
+    edit("firstDie", "Your first die is " + firstRoll);
+    // document.getElementById("firstDie").innerHTML = "Your first die is " + firstRoll;
+    edit("secondDie", "Your second die is " + secondRoll);
+    // document.getElementById("secondDie").innerHTML = "Your second die is " + secondRoll;
+    edit("total","Your total is " + total);
+    // document.getElementById("total").innerHTML = "Your total is " + total;
     return total;
     // this may not work for inJail function
 }
@@ -728,6 +731,7 @@ let runTurn = () => document.getElementById("diceRoll").addEventListener("click"
 
 function displayLocation() { 
     if (player.location <= 39) {
+      // edit(location).innerHTML = "You are at " + locationFinder(player.location);
         document.getElementById("location").innerHTML = "You are at " + locationFinder(player.location);
     } else {
         player.location -= 40;
@@ -737,11 +741,12 @@ function displayLocation() {
 }
 
 function displayMoney() {
+  // edit(money).innerHTML = "You have " + player.money + " dollars.";
     document.getElementById("money").innerHTML = "You have " + player.money + " dollars.";
 }
 
 function displayDescription(spot) {  
-  edit(message, spot.description);
+  edit(message).innerHTML = spot.description;
   // document.getElementById("message").innerHTML = spot.description;
 }
 
