@@ -1,6 +1,10 @@
 // goal for complete functionality - end of july
 // goal - finish all basic logic this weekend for single player
 
+let edit = (id, info) => {
+  document.getElementById("'" + id + "'").innerHTML = info;
+}
+
 let freeParking = 0;
 
 let tokens = ["battleship", "boot", "cannon", "horse", "iron", "racecar", "dog", "thimble", "tophat", "wheelbarrow", "moneybag"];
@@ -737,7 +741,8 @@ function displayMoney() {
 }
 
 function displayDescription(spot) {  
-    document.getElementById("message").innerHTML = spot.description;
+  edit(message, spot.description);
+  // document.getElementById("message").innerHTML = spot.description;
 }
 
 function parkingMoney(fee) {
