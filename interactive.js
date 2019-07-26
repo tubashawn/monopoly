@@ -27,7 +27,7 @@ let boardSpot = [{
   action: function() {
       player.money += 200;
       displayMoney();
-      document.getElementById("go-message").innerHTML = this.description;
+      edit("go-message", this.description);
   }
 }, {
   spaceName: "Mediterranean Avenue",
@@ -139,7 +139,7 @@ let boardSpot = [{
       if (player.justVisiting === true) {
         displayDescription(this);
       } else if (player.justVisiting === false) {
-
+// TODO: Finish this
       }
   }
   // TODO: create an inJail function to countdown,
@@ -661,20 +661,19 @@ let shuffle = (array) => {
 		// And swap it with the current element.
 		temporaryValue = array[currentIndex];
 		array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+    array[randomIndex] = temporaryValue;
 	}
 	return array;
 };
 
 let drawCard = (deck) => {
-    if (deck.length < 1) {
-        shuffle(deck);
-        return deck.pop();
-    } else {
-        return deck.pop();
-    }
+  if (deck.length < 1) {
+    shuffle(deck);
+    return deck.pop();
+  } else {
+    return deck.pop();
+  }
 };
-
 
 let displayCard = () => {
     let cardStack;
@@ -686,10 +685,10 @@ let displayCard = () => {
     } 
     if (cardStack != undefined) {
       let drawnCard = drawCard(cardStack);
-        document.getElementById("card").innerHTML = "You drew " + drawnCard.cardName;
-        console.log(drawnCard);
-        drawnCard.action();
-        displayMoney();
+      edit("card", "You drew " + drawnCard.cardName)
+      console.log(drawnCard);
+      drawnCard.action();
+      displayMoney();
     }   
 };
 
@@ -702,80 +701,67 @@ let rollTheDice = () => {
     let secondRoll = diceRoll();
     let total = firstRoll + secondRoll;
     edit("firstDie", "Your first die is " + firstRoll);
-    // document.getElementById("firstDie").innerHTML = "Your first die is " + firstRoll;
     edit("secondDie", "Your second die is " + secondRoll);
-    // document.getElementById("secondDie").innerHTML = "Your second die is " + secondRoll;
     edit("total","Your total is " + total);
-    // document.getElementById("total").innerHTML = "Your total is " + total;
     return total;
     // this may not work for inJail function
-}
+};
 
 let runTurn = () => document.getElementById("diceRoll").addEventListener("click", function() {
   edit("message","");
-    // document.getElementById("message").innerHTML = "";
   edit("card", "");
-    // document.getElementById("card").innerHTML = "";
-    if (document.getElementById("go-message").innerHTML != "") {
-      edit("go-message", "");
-        // document.getElementById("go-message").innerHTML = "";
+  
+  if (document.getElementById("go-message").innerHTML != "") {
+    edit("go-message", "");
     }
-    player.location += rollTheDice();
-    displayLocation();
-    displayCard();
-    if (boardSpot[player.location].action) {
-        boardSpot[player.location].action();
-    } else if (boardSpot[player.location] == 9 && player.justVisiting == false) {
-      boardSpot[player.location] = 9;
-    }
+    
+  player.location += rollTheDice();
+  displayLocation();
+  displayCard();
+  
+  if (boardSpot[player.location].action) {
+    boardSpot[player.location].action();
+  } else if (boardSpot[player.location] == 9 && player.justVisiting == false) {
+    boardSpot[player.location] = 9;
+  }
 });
 
-
-
 function displayLocation() { 
-  let locDisplay = edit("location", "You are at " + locationFinder(player.location));
-    if (player.location <= 39) {
-      locDisplay;
-      // edit("location", "You are at " + locationFinder(player.location));
-        // document.getElementById("location").innerHTML = "You are at " + locationFinder(player.location);
+  if (player.location <= 39) {
+    edit("location", "You are at " + locationFinder(player.location));
     } else {
-        player.location -= 40;
-        boardSpot[0].action();
-        locDisplay;
-        // document.getElementById("location").innerHTML = "You are at " + locationFinder(player.location);
+      player.location -= 40;
+      boardSpot[0].action();
+      edit("location", "You are at " + locationFinder(player.location));
     }
 }
 
 function displayMoney() {
-  // edit(money).innerHTML = "You have " + player.money + " dollars.";
-    document.getElementById("money").innerHTML = "You have " + player.money + " dollars.";
+  edit("money", "You have " + player.money + " dollars.");
 }
 
 function displayDescription(spot) {  
-  edit(message).innerHTML = spot.description;
-  // document.getElementById("message").innerHTML = spot.description;
+  edit("message", spot.description);
 }
 
 function parkingMoney(fee) {
-    player.money -= fee.amount;
-    freeParking += fee.amount;
-    displayMoney();
+  player.money -= fee.amount;
+  freeParking += fee.amount;
+  displayMoney();
 }
 
-
 function locationFinder(address) {
-    return boardSpot[address].spaceName;
+  return boardSpot[address].spaceName;
 } 
 
-
 function playerTurn() {
-    if(player.ownedProperties === null) {
-        if (improveQuestion != true) {
-            displayLocation();
-        }
-    } else {
-        runTurn(); 
+  if(player.ownedProperties === null) {
+    if (improveQuestion != true) {
+      displayLocation();
     }
+  } else {
+    runTurn(); 
+  }
 }
 
 let inJail = () => {
@@ -786,23 +772,20 @@ let inJail = () => {
     dieTwo = diceRoll();
     if (dieOne === dieTwo) {
       player.justVisiting = true;
-      document.getElementById("message").innerHTML = "You served your time, you are now out of jail. Roll the dice.";
+      edit("message", "You served your time, you are now out of jail. Roll the dice.");
       runTurn();
     } else {
-      document.getElementById("message").innerHTML = "You are still locked up.";
+      edit("message", "You are still locked up.");
     }
   } 
-  // figure out a better way?
-
-}
+  // figure out a better way
+};
 
 let gameSetup = () => {
     shuffle(chanceCards);
     shuffle(chestCards);
-}
-
+};
 
 gameSetup();
 playerTurn();
 displayMoney();
-
