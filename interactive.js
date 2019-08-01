@@ -1,5 +1,4 @@
 // goal for complete functionality - end of july
-// goal - finish all basic logic this weekend for single player
 
 let edit = (id, data) => {
   document.getElementById(id).innerHTML = data;
@@ -650,7 +649,6 @@ let chestCards = [{
 
 //Fisher-Yates algorithm for shuffling
 let shuffle = (array) => {
-    array = array.slice();
 	let currentIndex = array.length;
 	let temporaryValue, randomIndex;
 	// While there remain elements to shuffle.
@@ -678,8 +676,7 @@ let drawCard = (deck) => {
 let displayCard = () => {
     let cardStack;
     if (boardSpot[player.location].spaceName == "Community Chest") {
-        cardStack = chestCards;
-        
+        cardStack = chestCards;  
     } else if (boardSpot[player.location].spaceName == "Chance") {
         cardStack = chanceCards;
     } 
@@ -783,7 +780,9 @@ let inJail = () => {
 
 let gameSetup = () => {
     shuffle(chanceCards);
+    console.log(chanceCards);
     shuffle(chestCards);
+    console.log(chestCards);
 };
 
 gameSetup();
