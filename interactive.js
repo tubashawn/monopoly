@@ -478,7 +478,8 @@ let boardSpot = [{
   mortgagePrice: 200
 }]; 
 
-let chanceCards = [{
+let chanceCards = [
+  {
   cardName: "Advance to GO",
   action: function() {
     player.location = 0;
@@ -557,7 +558,8 @@ let chanceCards = [{
   }
 }];
 
-let chestCards = [{
+let chestCards = [
+  {
   cardName: "Advance to GO",
   action: function() {
     player.location = 0;
@@ -664,29 +666,48 @@ let shuffle = (array) => {
 	return array;
 };
 
-let drawCard = (deck) => {
-  if (deck.length < 1) {
-    shuffle(deck);
-    return deck.pop();
-  } else {
-    return deck.pop();
-  }
+let drawCard = (deck, count) => {
+  let second = count + 1;
+  let sliced = deck.slice(count, second);
+  return sliced;
 };
 
+let chanceCount = 0;
+let chestCount = 0;
+console.log(chanceCards);
+console.log(chestCards);
+
 let displayCard = () => {
-    let cardStack;
+    let cardStack, drawnCard;
     if (boardSpot[player.location].spaceName == "Community Chest") {
-        cardStack = chestCards;  
+      cardStack = chestCards;  
+      drawnCard = drawCard(cardStack, chestCount);
+      console.log(drawnCard[0].cardName);
+      edit("card", "You drew " + drawnCard[0].cardName);
+      drawnCard[0].action();
+      chestCount++;
+      if(chestCount === 17) {
+        chestCards = shuffle(chestCards);
+        console.log(chestCards);
+        chestCount = 0;
+      }
     } else if (boardSpot[player.location].spaceName == "Chance") {
-        cardStack = chanceCards;
+      cardStack = chanceCards;
+      drawnCard = drawCard(cardStack, chanceCount);
+      console.log(drawnCard[0].cardName);
+      edit("card", "You drew " + drawnCard[0].cardName);
+      drawnCard[0].action();
+      chanceCount++;
+        if(chanceCount === 15) {
+          chanceCards = shuffle(chanceCards);
+          console.log(chanceCards);
+          chanceCount = 0;
+        }
     } 
-    if (cardStack != undefined) {
-      let drawnCard = drawCard(cardStack);
-      edit("card", "You drew " + drawnCard.cardName)
-      console.log(drawnCard);
-      drawnCard.action();
+    
       displayMoney();
-    }   
+      
+
 };
 
 function diceRoll() {
@@ -707,11 +728,10 @@ let rollTheDice = () => {
 let runTurn = () => document.getElementById("diceRoll").addEventListener("click", function() {
   edit("message","");
   edit("card", "");
-  
   if (document.getElementById("go-message").innerHTML != "") {
     edit("go-message", "");
-    }
-    
+  }
+  
   player.location += rollTheDice();
   displayLocation();
   displayCard();
@@ -780,9 +800,7 @@ let inJail = () => {
 
 let gameSetup = () => {
     shuffle(chanceCards);
-    console.log(chanceCards);
     shuffle(chestCards);
-    console.log(chestCards);
 };
 
 gameSetup();
