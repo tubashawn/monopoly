@@ -754,7 +754,7 @@ function displayLocation() {
 }
 
 function displayMoney() {
-  edit("money", "You have " + player.money + " dollars.");
+  edit("money", " - $" + player.money);
 }
 
 function displayDescription(spot) {  
