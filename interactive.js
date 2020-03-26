@@ -6,7 +6,54 @@ let edit = (id, data) => {
 
 let freeParking = 0;
 
-let tokens = ["battleship", "boot", "cannon", "horse", "iron", "racecar", "dog", "thimble", "tophat", "wheelbarrow", "moneybag"];
+let tokens = {
+  robot: {
+    name: "robot",
+    icon: "robot"
+  },
+  radioactive: {
+    name: "radioactive",
+    icon: "radiation-alt"
+  },
+  hippo: {
+    name: "hippo",
+    icon: "hippo"
+  },
+  spider: {
+    name: "spider",
+    icon: "spider"
+  },
+  notes: {
+    name: "eighth notes",
+    icon: "music"
+  },
+  freshAir: {
+    name: "air freshener",
+    icon: "air-freshener"
+  },
+  football: {
+    name: "footballwords",
+    icon: "football-ball"
+  }
+};
+
+const iconCard = document.getElementById("iconCard");
+let icons = Object.keys(tokens);
+// console.log(icons);
+// icons.forEach(function(v, i) {
+//   let currentIcon = tokens[v];
+//   let newRow = iconCard.append(`<li id=${currentIcon.name}><i class=fas fa-${currentIcon.icon}></i>  -  ${currentIcon.name}</li>`);
+//   newRow;
+// });
+
+for (let i = 0; i < icons.length; i++) {
+  // console.log(tokens[icons[i]]);
+  let iconRow = document.createElement("li");
+  let currentIcon = tokens[icons[i]];
+  console.log(currentIcon);
+  let newRow = iconCard.appendChild(iconRow);
+  newRow.setAttribute("id", currentIcon.name);
+}
 
 let player = {
     name : "Player 1",
