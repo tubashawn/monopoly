@@ -39,20 +39,12 @@ let tokens = {
 
 const iconCard = document.getElementById("iconCard");
 let icons = Object.keys(tokens);
-// console.log(icons);
-// icons.forEach(function(v, i) {
-//   let currentIcon = tokens[v];
-//   let newRow = iconCard.append(`<li id=${currentIcon.name}><i class=fas fa-${currentIcon.icon}></i>  -  ${currentIcon.name}</li>`);
-//   newRow;
-// });
-
 for (let i = 0; i < icons.length; i++) {
-  // console.log(tokens[icons[i]]);
   let iconRow = document.createElement("li");
   let currentIcon = tokens[icons[i]];
-  console.log(currentIcon);
   let newRow = iconCard.appendChild(iconRow);
   newRow.setAttribute("id", currentIcon.name);
+  newRow.innerHTML = `<i class="fas fa-${currentIcon.icon}"></i>`;
 }
 
 let player = {
